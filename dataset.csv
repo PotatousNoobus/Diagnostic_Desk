@@ -1,0 +1,31 @@
+log_text,label
+"[INFO] 192.168.1.12 - GET / HTTP/1.1 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/114.0",SAFE
+"[INFO] 192.168.1.45 - GET /favicon.ico HTTP/1.1 User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_5)",SAFE
+"[INFO] 192.168.1.22 - OPTIONS /api/v1/status HTTP/1.1 User-Agent: PostmanRuntime/7.32.3",SAFE
+"[INFO] 192.168.1.12 - GET /assets/main.css HTTP/1.1 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)",SAFE
+"[INFO] 192.168.1.19 - GET /index.html HTTP/1.1 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",SAFE
+"[INFO] 192.168.1.45 - GET /images/avatar.png HTTP/1.1 User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_5)",SAFE
+"[INFO] 192.168.1.102 - GET /api/user/settings HTTP/1.1 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)",SAFE
+"[INFO] 192.168.1.25 - POST /submit-form HTTP/1.1 User-Agent: Mozilla/5.0 (Linux; Android 13; SM-S901B)",SAFE
+"[INFO] 192.168.1.12 - GET /js/app.js HTTP/1.1 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)",SAFE
+"[INFO] 192.168.1.61 - GET /docs/readme.md HTTP/1.1 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)",SAFE
+"[WARN] 192.168.1.50 - POST /api/telemetry HTTP/1.1 User-Agent: python-requests/2.28.1",WARN
+"[WARN] 192.168.1.33 - GET /metrics HTTP/1.1 User-Agent: curl/7.81.0",WARN
+"[WARN] 192.168.1.50 - GET /healthz HTTP/1.1 User-Agent: python-requests/2.28.1",WARN
+"[WARN] 192.168.1.110 - GET /robots.txt HTTP/1.1 User-Agent: Go-http-client/1.1",WARN
+"[WARN] 192.168.1.115 - GET / HTTP/1.1 User-Agent: Wget/1.21.2",WARN
+"[WARN] 192.168.1.33 - HEAD /test-endpoint HTTP/1.1 User-Agent: curl/7.81.0",WARN
+"[WARN] 192.168.1.120 - POST /sync HTTP/1.1 User-Agent: Java/1.8.0_292",WARN
+"[WARN] 192.168.1.50 - GET /api/v2/debug HTTP/1.1 User-Agent: python-requests/2.28.1",WARN
+"[WARN] 192.168.1.33 - GET /config.json HTTP/1.1 User-Agent: curl/7.81.0",WARN
+"[WARN] 192.168.1.135 - GET /feed HTTP/1.1 User-Agent: Ruby",WARN
+"[CRIT] 192.168.1.104 - GET /phpmyadmin/ HTTP/1.0 User-Agent: Mozilla/5.0 (compatible; Nmap Scripting Engine)",THREAT
+"[CRIT] 192.168.1.104 - GET /wp-admin/ HTTP/1.0 User-Agent: Mozilla/5.0 (compatible; Nmap Scripting Engine)",THREAT
+"[CRIT] 192.168.1.77 - GET /../../../etc/passwd HTTP/1.1 User-Agent: curl/7.68.0",THREAT
+"[CRIT] 192.168.1.77 - GET /..%2F..%2F..%2Fwindows/win.ini HTTP/1.1 User-Agent: curl/7.68.0",THREAT
+"[CRIT] 192.168.1.210 - POST /login HTTP/1.1 Payload: user=admin' OR '1'='1'--",THREAT
+"[CRIT] 192.168.1.210 - POST /login HTTP/1.1 Payload: user=admin\" OR 1=1#",THREAT
+"[CRIT] 192.168.1.88 - GET /search?q=<script>alert('XSS')</script> HTTP/1.1 User-Agent: Mozilla/5.0",THREAT
+"[CRIT] 192.168.1.15 - GET /?cmd=cat%20/etc/passwd HTTP/1.1 User-Agent: python-requests/2.25.1",THREAT
+"[CRIT] 192.168.1.200 - GET /.env HTTP/1.1 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)",THREAT
+"[CRIT] 192.168.1.104 - OPTIONS / HTTP/1.0 User-Agent: masscan/1.3",THREAT
