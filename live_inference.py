@@ -5,12 +5,16 @@ import onnxruntime as ort
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import serial
+import requests
+from dotenv import load_dotenv
 
-
-LOG_FILE = "system_errors.log"
-MODEL_PATH = "custom_model.onnx"
-COM_PORT = "COM5"
 BAUD_RATE = 115200
+
+load_dotenv()
+
+LOG_FILE = os.getenv("LOG_FILE_PATH")
+MODEL_PATH = os.getenv("MODEL_FILE_PATH")
+ESP32_URL = os.getenv("ESP32_WEBHOOK_URL")
 
 class NPUClassifier:
     def __init__(self, model_path):
@@ -63,8 +67,11 @@ class LogMonitor(FileSystemEventHandler):
         
         packet = f"SEV:{label}|IP:{ip_addr}\n"
         
-        if hasattr(self, 'ser') and self.ser and self.ser.is_open:
-            self.ser.write(packet.encode('utf-8'))
+
+        try:
+            requests.post(ESP32_URL, data=packet, timeout=1.5)
+        except requests.exceptions.RequestException:
+            pass
 
 if __name__ == "__main__":
     if not os.path.exists(LOG_FILE):
@@ -72,14 +79,6 @@ if __name__ == "__main__":
         
     ai_engine = NPUClassifier(MODEL_PATH)
     event_handler = LogMonitor(ai_engine, LOG_FILE)
-
-    print("Attempting hardware link...")
-    try:
-        ser = serial.Serial(COM_PORT, BAUD_RATE, timeout=1)
-        event_handler.ser = ser
-        print(f"Hardware Linked on {COM_PORT}!")
-    except serial.SerialException:
-        print("ESP32 not found. Running in UI-only terminal mode.")
     
     observer = Observer()
     observer.schedule(event_handler, path=".", recursive=False)

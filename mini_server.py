@@ -26,7 +26,6 @@ class HoneypotHandler(http.server.BaseHTTPRequestHandler):
             
         self.send_response(200)
         self.send_header('Content-type', 'text/plain')
-        # Explicitly force the connection to close so browsers can't hijack it
         self.send_header('Connection', 'close') 
         self.end_headers()
         self.wfile.write(b"OK")
@@ -34,7 +33,7 @@ class HoneypotHandler(http.server.BaseHTTPRequestHandler):
     def log_message(self, format, *args):
         pass
 
-# Upgraded to ThreadingTCPServer to handle concurrent knocks
+
 server = socketserver.ThreadingTCPServer(("", PORT), HoneypotHandler)
 server.allow_reuse_address = True
 server.daemon_threads = True
