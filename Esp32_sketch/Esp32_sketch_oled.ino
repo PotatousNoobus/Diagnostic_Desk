@@ -1,6 +1,14 @@
 #include <WiFi.h>
 #include <WebServer.h>
-#include <secrets.h>
+#include "secrets.h"
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define OLED_RESET    -1 
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 const char* ssid = SECRET_WIFI_SSID;
 const char* password = SECRET_WIFI_PASS;
@@ -68,6 +76,19 @@ void setup() {
   digitalWrite(GREEN_LED, HIGH);
   digitalWrite(ORANGE_LED, LOW);
 
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    Serial.println("SSD1306 allocation failed");
+    for(;;);
+  }
+  
+  display.setTextWrap(true); 
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0, 0);
+  display.println("Booting IDS Node...");
+  display.display();
+
   Serial.print("Connecting to Wi-Fi");
   WiFi.begin(ssid, password);
   
@@ -79,6 +100,14 @@ void setup() {
   Serial.println("\nConnected!");
   Serial.print("ESP32 IP Address: ");
   Serial.println(WiFi.localIP());
+
+  display.clearDisplay();
+  display.setCursor(0, 0);
+  display.println("WiFi Connected!");
+  display.println("");
+  display.print("IP: ");
+  display.println(WiFi.localIP());
+  display.display();
 
   server.on("/", HTTP_GET, []() {
     server.send(200, "text/html", dashboard_html);
@@ -110,14 +139,50 @@ void handleUpdate() {
     String incoming = server.arg("plain");
     
     if (incoming.startsWith("SEV:")) {
-      int pipeIndex = incoming.indexOf('|');
-      String severity = incoming.substring(4, pipeIndex);
-      String ipData = incoming.substring(pipeIndex + 4);
+      int pipe1 = incoming.indexOf('|');
+      int pipe2 = incoming.indexOf('|', pipe1 + 1);
+      
+      String severity = "";
+      String ipData = "";
+      String timeData = "00:00:00";
+
+      if (pipe1 > 0 && pipe2 > 0) {
+        severity = incoming.substring(4, pipe1);
+        ipData = incoming.substring(pipe1 + 4, pipe2);
+        timeData = incoming.substring(pipe2 + 6);
+      } else if (pipe1 > 0) {
+        severity = incoming.substring(4, pipe1);
+        ipData = incoming.substring(pipe1 + 4);
+      }
       
       if (severity == "SAFE") {
         digitalWrite(GREEN_LED, HIGH); digitalWrite(ORANGE_LED, LOW);
       } else if (severity == "WARN" || severity == "THREAT") {
         digitalWrite(GREEN_LED, LOW); digitalWrite(ORANGE_LED, HIGH);
+
+        display.clearDisplay();
+        display.setCursor(0, 0);
+        display.setTextSize(1);
+        
+       
+        display.print("[");
+        display.print(timeData);
+        display.print("] ");
+        if (severity == "THREAT") {
+          display.println("THREAT!");
+        } else {
+          display.println("WARN");
+        }        
+        
+        display.drawLine(0, 10, 128, 10, SSD1306_WHITE);
+        display.setCursor(0, 14);
+        
+        display.print("SRC: ");
+        display.println(ipData);        
+       
+        display.println("STATUS: BLOCKED");
+        
+        display.display();
       }
 
       String cssClass = "safe";
@@ -126,6 +191,7 @@ void handleUpdate() {
       if (severity == "THREAT") { cssClass = "threat"; icon = "🚨"; }
 
       String newLog = "<div class='log-entry " + cssClass + "'>" + 
+                      "<span style='color: #666; font-size: 0.9em;'>[" + timeData + "]</span> " +
                       icon + " <strong>[" + severity + "]</strong> " + 
                       "Target: " + ipData + "</div>";
 
