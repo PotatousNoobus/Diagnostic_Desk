@@ -48,7 +48,7 @@ A decentralized, Edge AI-powered Intrusion Detection System with a Continuous Le
 
     LOG_FILE_PATH=system_errors.log
    
-    MODEL_FILE_PATH=network_watchdog.onnx
+    MODEL_FILE_PATH=custom_model.onnx
    
     ESP32_WEBHOOK_URL=http://192.168.1.XX/update
 
