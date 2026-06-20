@@ -47,7 +47,9 @@ A decentralized, Edge AI-powered Intrusion Detection System with a Continuous Le
 1. **Create the Environment Variables file:**Create a file named exactly `.env` in your root directory to securely store your paths and webhooks (following the 12-Factor App methodology):
 
     LOG_FILE_PATH=system_errors.log
+   
     MODEL_FILE_PATH=network_watchdog.onnx
+   
     ESP32_WEBHOOK_URL=http://192.168.1.XX/update
 
 *(Note: You will update the IP address after booting the ESP32 in Part 2).*
@@ -64,6 +66,7 @@ A decentralized, Edge AI-powered Intrusion Detection System with a Continuous Le
 2. **Setup Secrets Configuration:**In your Arduino IDE, create a new tab named `secrets.h` to keep your Wi-Fi credentials out of the main code:
 
     #define SECRET_WIFI_SSID "Your_WiFi_Network_Name"
+   
     #define SECRET_WIFI_PASS "Your_WiFi_Password"
 
 1. **Install Arduino Libraries & Flash:**
