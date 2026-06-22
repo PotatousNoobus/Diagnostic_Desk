@@ -10,11 +10,11 @@ from skl2onnx import convert_sklearn
 from skl2onnx.common.data_types import StringTensorType
 
 def train_and_export():
-    print("Loading honeypot_dataset.csv...")
+    print("Loading dataset.csv...")
     try:
-        df = pd.read_csv("honeypot_dataset.csv")
+        df = pd.read_csv("dataset.csv")
     except FileNotFoundError:
-        print("Error: honeypot_dataset.csv not found! Make sure it is in this directory.")
+        print("Error: dataset.csv not found! Make sure it is in this directory.")
         return
 
     X = df['log_text'].values
