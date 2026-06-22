@@ -44,7 +44,7 @@ A decentralized, Edge AI-powered Intrusion Detection System with a Continuous Le
 
     pip install -r requirements.txt
 
-1. **Create the Environment Variables file:**Create a file named exactly `.env` in your root directory to securely store your paths and webhooks (following the 12-Factor App methodology):
+1. **Create the Environment Variables file:** Create a file named exactly `.env` in your root directory to securely store your paths and webhooks (following the 12-Factor App methodology):
 
     LOG_FILE_PATH=system_errors.log
    
@@ -63,7 +63,7 @@ A decentralized, Edge AI-powered Intrusion Detection System with a Continuous Le
     - SCL -&gt; Pin D22
     - SDA -&gt; Pin D21
     - *Status LEDs: Green on Pin 18, Orange on Pin 5.*
-2. **Setup Secrets Configuration:**In your Arduino IDE, create a new tab named `secrets.h` to keep your Wi-Fi credentials out of the main code:
+2. **Setup Secrets Configuration:** In your Arduino IDE, create a new tab named `secrets.h` to keep your Wi-Fi credentials out of the main code:
 
     #define SECRET_WIFI_SSID "Your_WiFi_Network_Name"
    
@@ -78,12 +78,12 @@ A decentralized, Edge AI-powered Intrusion Detection System with a Continuous Le
 
 ## 💻 Running the System
 
-1. **Start the Watchdog:**Run the main Python inference script on your edge device:
+1. **Start the Watchdog:** Run the main Python inference script on your edge device:
 
     python main_v2.py
 
-1. **Open the Dashboard:**On any phone or computer on the same Wi-Fi network, type the ESP32's IP address into the browser to view the live SOC dashboard.
-2. **Simulate Attacks (Testing):**Open a new terminal and fire `curl` commands to trigger the system.
+1. **Open the Dashboard:** On any phone or computer on the same Wi-Fi network, type the ESP32's IP address into the browser to view the live SOC dashboard.
+2. **Simulate Attacks (Testing):** Open a new terminal and fire `curl` commands to trigger the system.
 
 *High Confidence Threats (Triggers Retraining Counter):*
 
