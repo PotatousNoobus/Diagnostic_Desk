@@ -99,4 +99,4 @@ A decentralized, Edge AI-powered Intrusion Detection System with a Continuous Le
 
 By default, the AI is programmed to retrain after identifying **5 new THREATs**. Fire 5 distinct `THREAT` level attacks at your server. You will see the background thread (`Brain 2`) wake up, read the updated `dataset.csv`, export `custom_model_v2.onnx`, and Hot-Swap the NPU engine in real-time.
 
-*Developed for Tech Club Demonstration - Edge AI & Network Security.*
+
